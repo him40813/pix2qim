@@ -1,0 +1,41 @@
+#### Dynamic BG challenge
+#-------------------------------
+Basic methods-FrameDifferenceBGS
+Basic methods-DPMeanBGS
+Single gaussian based methods-LBSimpleGaussian
+Multiple gaussians based methods-DPGrimsonGMMBGS
+Type 2 Fuzzy based methods-T2FGMM_UM
+Multiple features based methods-DPTextureBGS
+Multiple features based methods-SJN_MultiCueBGS
+Multiple features based methods-LOBSTERBGS
+Multiple features based methods-SuBSENSEBGS
+Non parametric methods-PBAS
+Non parametric methods-KDE
+Non parametric methods-IndependentMultimodalBGS
+
+#### Below is general challenge
+#-------------------------------
+Basic methods-StaticFrameDifferenceBGS
+Basic methods-WeightedMovingMeanBGS
+Basic methods-WeightedMovingVarianceBGS
+Basic methods-AdaptiveBackgroundLearning
+Basic methods-AdaptiveSelectiveBackgroundLearning
+Basic methods-DPAdaptiveMedianBGS
+Basic methods-SigmaDeltaBGS
+Fuzzy based methods-FuzzySugenoIntegral
+Fuzzy based methods-FuzzyChoquetIntegral
+Fuzzy based methods-LBFuzzyGaussian
+Single gaussian based methods-DPWrenGABGS
+Multiple gaussians based methods-MixtureOfGaussianV2BGS
+Multiple gaussians based methods-DPZivkovicAGMMBGS
+Multiple gaussians based methods-DPPratiMediodBGS
+Multiple gaussians based methods-LBMixtureOfGaussians
+Type 2 Fuzzy based methods-T2FGMM_UV
+Type 2 Fuzzy based methods-T2FMRF_UM
+Type 2 Fuzzy based methods-T2FMRF_UV
+Multiple features based methods-LbpMrf
+Non parametric methods-VuMeter
+Non parametric methods-KNNBGS
+Subspace based methods-DPEigenbackgroundBGS
+Neural and neuro fuzzy methods-LBAdaptiveSOM
+Neural and neuro fuzzy methods-LBFuzzyAdaptiveSOM

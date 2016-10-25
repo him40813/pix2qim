@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<opencv_storage>
+<N>20</N>
+<R_lower>18</R_lower>
+<Raute_min>2</Raute_min>
+<T_lower>2</T_lower>
+<T_upper>200</T_upper>
+<R_scale>5</R_scale>
+<R_incdec>0</R_incdec>
+<T_dec>0</T_dec>
+<T_inc>1</T_inc>
+<alpha>7</alpha>
+<beta>1</beta>
+<showOutput>0</showOutput>
+</opencv_storage>
