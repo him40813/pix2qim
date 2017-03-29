@@ -24,8 +24,8 @@ vidProcessor::vidProcessor():
 
     //roiChecker=imread("37-41_ROI.png",CV_LOAD_IMAGE_GRAYSCALE);
     //roiChecker=imread("100-104_ROI.png",CV_LOAD_IMAGE_GRAYSCALE);
-    roiChecker=imread("106-109_ROI.png",CV_LOAD_IMAGE_GRAYSCALE);
-    //roiChecker=imread("110-111_ROI.png",CV_LOAD_IMAGE_GRAYSCALE);
+    //roiChecker=imread("106-109_ROI.png",CV_LOAD_IMAGE_GRAYSCALE);
+    roiChecker=imread("110-111_ROI.png",CV_LOAD_IMAGE_GRAYSCALE);
     cv::cvtColor(roiChecker, roiColor, cv::COLOR_GRAY2BGR);
 
     contCounter=0;
@@ -288,7 +288,8 @@ bool vidProcessor::run()
                 cv::cvtColor(canny_output_real, colorCanny, cv::COLOR_GRAY2BGR);
                 //copy with mask to drawing2v2
                 colorCanny.copyTo(drawing2V2,output);
-
+//                namedWindow("ttt");
+//                imshow("ttt",canny_output_real);
                 bool conCheck=false;
 
 
@@ -488,7 +489,7 @@ bool vidProcessor::run()
                 cout<<"step : 6 "<<endl;
 #endif
                         cout<<highCV2<<endl;
-                       if (highCV2>90 && highCV2<250 && !outOfRoi){//highCV2>140 && highCV2<200 && distanceRN<=0.5){
+                       if (highCV2>90 && highCV2<250 && !outOfRoi ){//highCV2>140 && highCV2<200 && distanceRN<=0.5){
 
                            double iR=0.05;
                            double growingPersent=abs(highCV2-contTemp)*100/contTemp;
@@ -510,13 +511,15 @@ bool vidProcessor::run()
 
 #endif
                            //heightHis push to vector
-                           heightHis.push_back(round(highCV2));
+                            if (round(highCV2)!=104 && round(highCV2)!=495)
+                                heightHis.push_back(round(highCV2));
 
                            if (heightHis.size()>10){
                                HDPAV=calPeakBin(heightHis,30);
                            }
                            outputfile<<to_string(fnumber)<<",";
                            outputfile << to_string(highCV2)<<",";
+                           outputfile << to_string(HDPAV)<<",";
                            outputfile << to_string(highC)<<",";
                            outputfile << to_string(distanceRN)<<",";
                            outputfile << to_string(farCV2)<<",";
@@ -1007,17 +1010,20 @@ int vidProcessor::calPeakBin(vector<int> heightHis,double percentage)
     //order height information into histrogram
     for (int i=0;i<heightHis.size();++i){
         int thisHeight=heightHis.at(i);
+
         std::vector<int>::iterator found=find(tempHeight.begin(),tempHeight.end(),thisHeight);
         if (found!=tempHeight.end()){
             int hIndex=distance(tempHeight.begin(),found);
             ++tempNum.at(hIndex);
             //cout<<thisHeight<<" : "<<tempHeight.at(hIndex)<<endl;
-
+             cout<<"thisHeight1"<<tempNum.at(hIndex)<<endl;
         }else {
             tempHeight.push_back(thisHeight);
             tempNum.push_back(1);
+            cout<<"thisHeight1"<<tempHeight.at(0)<<endl;
         }
     }
+    cout<<"1"<<endl;
 
     //find peak bin
     std::vector<int>::iterator maxNum=max_element(tempNum.begin(),tempNum.end());
@@ -1049,13 +1055,14 @@ int vidProcessor::calPeakBin(vector<int> heightHis,double percentage)
         //cout<<"maxNumInd : "<<maxNumIndex<<" : "<<tempHeight.at(maxNumIndex)<<endl;
     }
 
-
+    cout<<"2"<<endl;
     //main loop for opt
     int leftShift=1;
     int rightShift=1;
     vector<int> resultNum(tempNum.size(),0);
     cout<<tempNum.size()<<" : "<<resultNum.size()<<endl;
-
+    //install max num
+    resultNum.at(maxNumIndex)=tempNum.at(maxNumIndex);
     while(remainNumber>0){
         int lVal=-1;
         int rVal=-1;
@@ -1068,28 +1075,33 @@ int vidProcessor::calPeakBin(vector<int> heightHis,double percentage)
 
         //compare
         if (lVal>=rVal && lVal!=-1){
-            ++leftShift;
+
             resultNum.at(maxNumIndex-leftShift)=lVal;
             remainNumber-=lVal;
+            ++leftShift;
         }else if(rVal!=-1) {
-            ++rightShift;
+
             resultNum.at(maxNumIndex+rightShift)=rVal;
             remainNumber-=rVal;
+            ++rightShift;
         }else{
             //cout<<remainNumber<<endl;
             break;
         }
 
     }
-
+    cout<<"3"<<endl;
     int allVal=0;
     int allNum=0;
     for (int wi=0;wi<resultNum.size();++wi){
+        cout<<wi<<","<<resultNum.size()<<endl;
         int tempNum=resultNum.at(wi);
+        cout<<tempNum<<endl;
         if (tempNum>0){
             allVal+=tempNum*tempHeight.at(wi);
             allNum+=tempNum;
         }
+        cout<<allVal<<","<<allNum<<endl;
     }
 
     cout<<"average : "<<allVal/allNum<<endl;

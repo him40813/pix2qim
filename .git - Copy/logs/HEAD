@@ -1,0 +1,5 @@
+0000000000000000000000000000000000000000 63c0a0a052581a81734e75a7f345f6ca6c7695ab hhm <wong_him@hotmail.com> 1477386741 +0700	commit (initial): :circus_tent: Added .gitattributes
+63c0a0a052581a81734e75a7f345f6ca6c7695ab 1a6517ce4ab848e55cfc5966b9f571ced27ceada hhm <wong_him@hotmail.com> 1477388334 +0700	commit: reload All Exist File
+1a6517ce4ab848e55cfc5966b9f571ced27ceada e11a09ffa9ffec23463e188b34254da66e93ad76 hhm <wong_him@hotmail.com> 1477389960 +0700	pull --progress --rebase --prune origin master: checkout e11a09ffa9ffec23463e188b34254da66e93ad76
+e11a09ffa9ffec23463e188b34254da66e93ad76 835fbf0ed3aeefca83768acccfc8016b3e1fc713 hhm <wong_him@hotmail.com> 1477390019 +0700	pull --progress --rebase --prune origin master: reload All Exist File
+835fbf0ed3aeefca83768acccfc8016b3e1fc713 835fbf0ed3aeefca83768acccfc8016b3e1fc713 hhm <wong_him@hotmail.com> 1477390019 +0700	rebase finished: returning to refs/heads/master
