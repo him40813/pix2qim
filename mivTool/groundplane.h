@@ -15,6 +15,7 @@ class GroundPlane
 {
 public:
 
+    Point3d centerOfCP;
 
     Mat cm,dc,RTvec;
 
@@ -91,6 +92,10 @@ public:
     void simulateGroundPlane(double alpha,double dist,Mat im);
 
     void undistortCM(Mat src);
+
+    double calDisCP2Foot(Point foot);
+
+    Point3d getCameraHeight();
 
 private:
     int eachDis,size1,size2;

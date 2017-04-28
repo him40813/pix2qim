@@ -252,6 +252,7 @@ bool GroundPlane::saveGroundParam(const string x)
     fs<<"ib"<<ib;
     fs<<"ic"<<ic;
     fs<<"id"<<id;
+    fs<<"corners"<<corners;
     fs.release();
     return true;
 }
@@ -269,10 +270,19 @@ bool GroundPlane::readGroundParam()
         fs["ib"]>>ib;
         fs["ic"]>>ic;
         fs["id"]>>id;
+        fs["corners"]>>corners;
         cout<<a<<endl;
         cout<<b<<endl;
         cout<<c<<endl;
         cout<<d<<endl;
+        cout<<corners<<endl;
+        cout<<"corner1"<<getPointAtGround(corners.at(0))<<endl;
+        cout<<"corner2"<<getPointAtGround(corners.at(5))<<endl;
+
+        Point3d lb=getPointAtGround(corners.at(0));
+        Point3d rt=getPointAtGround(corners.at(5));
+        centerOfCP=Point3d((lb.x+rt.x)/2,(lb.y+rt.y)/2,(lb.z+rt.z)/2);
+        cout<<"centerOfCP"<<centerOfCP<<endl;
         fs.release();
         return true;
     }else{
@@ -294,10 +304,20 @@ bool GroundPlane::readGroundParam(const string x)
         fs["ib"]>>ib;
         fs["ic"]>>ic;
         fs["id"]>>id;
+        fs["corners"]>>corners;
         cout<<a<<endl;
         cout<<b<<endl;
         cout<<c<<endl;
         cout<<d<<endl;
+        cout<<corners<<endl;
+        cout<<"corner1"<<getPointAtGround(corners.at(0))<<endl;;
+        cout<<"corner2"<<getPointAtGround(corners.at(5))<<endl;;
+
+        Point3d lb=getPointAtGround(corners.at(0));
+        Point3d rt=getPointAtGround(corners.at(5));
+        centerOfCP=Point3d((lb.x+rt.x)/2,(lb.y+rt.y)/2,(lb.z+rt.z)/2);
+        cout<<"centerOfCP"<<centerOfCP<<endl;
+
         fs.release();
         return true;
     }else{
@@ -320,6 +340,7 @@ bool GroundPlane::writeSetting(const string x)
     fs<<"ib"<<ib;
     fs<<"ic"<<ic;
     fs<<"id"<<id;
+    fs<<"corners"<<corners;
     fs.release();
 
 }
@@ -644,4 +665,20 @@ void GroundPlane::undistortCM(Mat src){
     cout<<"cm"<<cm<<endl;
     cm=tempNewCM.clone();
     cout<<"cm"<<cm<<endl;
+}
+
+
+double GroundPlane::calDisCP2Foot(Point foot){
+    Point3d fp=getPointAtGround(foot);
+    return calDis3D(fp,centerOfCP);
+}
+
+Point3d GroundPlane::getCameraHeight()
+{
+    Mat ttt1 = (Mat_<double>(3,1) << 0, 100,0);
+    ttt1=cm.inv()*ttt1;
+    double x=d/(a*ttt1.at<double>(0)+b*ttt1.at<double>(1)+c*ttt1.at<double>(2))*ttt1.at<double>(0);
+    double y=d/(a*ttt1.at<double>(0)+b*ttt1.at<double>(1)+c*ttt1.at<double>(2))*ttt1.at<double>(1);
+    double z=d/(a*ttt1.at<double>(0)+b*ttt1.at<double>(1)+c*ttt1.at<double>(2));
+    return Point3d(x,y,z);
 }

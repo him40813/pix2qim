@@ -219,6 +219,13 @@ bool vidProcessor::run()
                     p=true;
                 }
 
+                if (fnumber==1){
+                    Point3d disCenterCam = gp->getPointAtGround(Point(320,240));
+                    cout<<"DISTANCE TO CENtER CAMERA: "<<gp->calDis3D(Point3d(0,0,0),disCenterCam)<<endl;
+                    cout<<"DISTANCE TO CENtER Calibration Pattern: "<<gp->calDis3D(Point3d(0,0,0),gp->centerOfCP)<<endl;
+                    p=true;
+                }
+
                 cv::cvtColor(frame,gray,CV_BGR2GRAY);
                 int yExtra=0;
                 int yExtraV2=0;
@@ -263,20 +270,20 @@ bool vidProcessor::run()
                 Canny( frame, canny_output_real, thresh_real, thresh_real*2, 3 );
 
                 //edge background subtraction
-                if (fnumber==0){
-                    edgeBg=canny_output_real.clone();
-                    cv::morphologyEx(edgeBg, edgeBg, cv::MORPH_DILATE, cv::getStructuringElement(cv::MORPH_RECT, cv::Size(3,3)));
-                    xAreaSize=(frame.cols/3);
-                    yAreaSize=(frame.rows/3);
-                }else{
-                    for (int r=0;r<edgeBg.rows;++r){
-                        for(int c=0;c<edgeBg.cols;++c){
-                            if (edgeBg.at<uchar>(r,c)>0){
-                                canny_output_real.at<uchar>(r,c)=0;
-                            }
-                        }
-                    }
-                }
+//                if (fnumber==0){
+//                    edgeBg=canny_output_real.clone();
+//                    cv::morphologyEx(edgeBg, edgeBg, cv::MORPH_DILATE, cv::getStructuringElement(cv::MORPH_RECT, cv::Size(3,3)));
+//                    xAreaSize=(frame.cols/3);
+//                    yAreaSize=(frame.rows/3);
+//                }else{
+//                    for (int r=0;r<edgeBg.rows;++r){
+//                        for(int c=0;c<edgeBg.cols;++c){
+//                            if (edgeBg.at<uchar>(r,c)>0){
+//                                canny_output_real.at<uchar>(r,c)=0;
+//                            }
+//                        }
+//                    }
+//                }
 
 
                 Mat drawing2;
@@ -526,6 +533,7 @@ bool vidProcessor::run()
                            outputfile << to_string(contCounter)<<",";
                            outputfile << to_string(growingPersent)<<",";
                            outputfile << to_string((low.y/yAreaSize*3)+low.x/xAreaSize)<<",";
+                           outputfile << to_string(gp->calDisCP2Foot(low))<<",";
                            outputfile<<endl;
                            cout<<"distanceRN: "<<distanceRN<<endl;
                            //line(drawing,low,gp->calTestHigh(low),cv::Scalar(0,0,255));

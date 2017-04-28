@@ -108,10 +108,10 @@ void SJN_MultiCueBGS::process(const cv::Mat &img_input, cv::Mat &img_output, cv:
 
   cvReleaseImage(&result_image);
 
-  if (showOutput)
-  {
-    cv::imshow("MultiCueBGS FG", img_output);
-  }
+//  if (showOutput)
+//  {
+//    cv::imshow("MultiCueBGS FG", img_output);
+//  }
 
   firstTime = false;
 }
